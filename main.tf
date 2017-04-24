@@ -77,7 +77,7 @@ resource "aws_elb" "web" {
 
   subnets = ["${aws_subnet.default.id}"]
   security_groups = ["${aws_security_group.elb.id}"]
-  instances = ["${aws_instance.web.id}"]
+  instances = ["${aws_instance.web.*.id}"]
 
   listener {
     instance_port = 80
@@ -110,5 +110,7 @@ resource "aws_instance" "web" {
       "sudo service nginx start",
     ]
   }
+
+  count = 2
 
 }
